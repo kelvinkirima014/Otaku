@@ -1,5 +1,7 @@
 const anchor = require("@project-serum/anchor");
 
+const { SystemProgram } = anchor.web3;``
+
 const main = async() => {
 
   console.log("🚀 Starting test...")
@@ -15,11 +17,11 @@ const main = async() => {
   const baseAccount = anchor.web3.Keypair.generate();
 
   //call initialize and pass it the params it requires
-  let tx = await program.methods.initialize({
+  let tx = await program.rpc.initialize({
     accounts: {
       baseAccount: baseAccount.publicKey,
       signer: provider.wallet.publicKey,
-      systemProgram: systemProgram.programId,
+      systemProgram: SystemProgram.programId,
     },
     signers: [baseAccount]
   })
@@ -28,6 +30,7 @@ const main = async() => {
 
   //fetch data from the account
   let account = await program.account.baseAccount.fetch(baseAccount.publicKey);
+  //access total_gifs
   console.log('👀 GIF Count', account.totalGifs.toString());
   
 };
