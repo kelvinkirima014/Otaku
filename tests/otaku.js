@@ -1,20 +1,20 @@
-const anchor = require("@project-serum/anchor");
+import { web3, AnchorProvider, setProvider, workspace } from "@project-serum/anchor";
 
-const { SystemProgram } = anchor.web3;``
+const { SystemProgram } = web3;
 
 const main = async() => {
 
   console.log("🚀 Starting test...")
 
   // Configure the client to use the local cluster.
-  const provider = anchor.AnchorProvider.env();
-  anchor.setProvider(provider);
+  const provider = AnchorProvider.env();
+  setProvider(provider);
 
   // Add your test here.
-  const program = anchor.workspace.Otaku;
+  const program = workspace.Otaku;
 
   //create an account keypair for our program to use
-  const baseAccount = anchor.web3.Keypair.generate();
+  const baseAccount = web3.Keypair.generate();
 
   //call initialize and pass it the params it requires
   let tx = await program.rpc.initialize({
