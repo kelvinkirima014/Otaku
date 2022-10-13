@@ -1,20 +1,20 @@
-import { web3, AnchorProvider, setProvider, workspace } from "@project-serum/anchor";
+const anchor = require ('@project-serum/anchor');
 
-const { SystemProgram } = web3;
+const { SystemProgram } = anchor.web3;
 
 const main = async() => {
 
   console.log("🚀 Starting test...")
 
   // Configure the client to use the local cluster.
-  const provider = AnchorProvider.env();
-  setProvider(provider);
+  const provider = anchor.AnchorProvider.env();
+  anchor.setProvider(provider);
 
   // Add your test here.
-  const program = workspace.Otaku;
+  const program = anchor.workspace.Otaku;
 
   //create an account keypair for our program to use
-  const baseAccount = web3.Keypair.generate();
+  const baseAccount = anchor.web3.Keypair.generate();
 
   //call initialize and pass it the params it requires
   let tx = await program.rpc.initialize({
@@ -32,6 +32,16 @@ const main = async() => {
   let account = await program.account.baseAccount.fetch(baseAccount.publicKey);
   //access total_gifs
   console.log('👀 GIF Count', account.totalGifs.toString());
+
+  await program.rpc.addGif({
+    accounts: {
+      baseAccount: baseAccount.publicKey,
+    }
+  });
+
+  account = await program.account.baseAccount.fetch(baseAccount.publicKey);
+  console.log('👀 GIF Count', account.totalGifs.toString());
+  
   
 };
 

@@ -21,6 +21,12 @@ pub mod otaku {
     }
 } 
 
+
+#[account]
+pub struct BaseAccount {
+    pub total_gifs: u64,
+}
+
 #[derive(Accounts)]
 pub struct Initialize<'info> {
     #[account(init, payer = signer, space = 9000 )]
@@ -31,10 +37,6 @@ pub struct Initialize<'info> {
 
 }
 
-#[account]
-pub struct BaseAccount {
-    pub total_gifs: u64,
-}
 
 #[derive(Accounts)]
 pub struct AddGif<'info> {
