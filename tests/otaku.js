@@ -2,11 +2,13 @@ const anchor = require("@project-serum/anchor");
 
 const main = async() => {
 
-  
-  // Configure the client to use the local cluster.
-  anchor.setProvider(anchor.AnchorProvider.env());
+  console.log("🚀 Starting test...")
 
-    console.log("🚀 Starting test...")
+  // Configure the client to use the local cluster.
+  const provider = anchor.AnchorProvider.env();
+  anchor.setProvider(provider);
+
+    
 
     // Add your test here.
     const program = anchor.workspace.Otaku;
