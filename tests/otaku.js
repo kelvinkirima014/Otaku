@@ -8,12 +8,27 @@ const main = async() => {
   const provider = anchor.AnchorProvider.env();
   anchor.setProvider(provider);
 
-    
+  // Add your test here.
+  const program = anchor.workspace.Otaku;
 
-    // Add your test here.
-    const program = anchor.workspace.Otaku;
-    const tx = await program.methods.initialize().rpc();
-    console.log("📝 Your transaction signature", tx);
+  //create an account keypair for our program to use
+  const baseAccount = anchor.web3.Keypair.generate();
+
+  //call initialize and pass it the params it requires
+  let tx = await program.methods.initialize({
+    accounts: {
+      baseAccount: baseAccount.publicKey,
+      signer: provider.wallet.publicKey,
+      systemProgram: systemProgram.programId,
+    },
+    signers: [baseAccount]
+  })
+
+  console.log("📝 Your transaction signature", tx);
+
+  //fetch data from the account
+  let account = await program.account.baseAccount.fetch(baseAccount.publicKey);
+  console.log('👀 GIF Count', account.totalGifs.toString());
   
 };
 
