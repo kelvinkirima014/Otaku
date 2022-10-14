@@ -46,3 +46,9 @@ pub struct AddGif<'info> {
     #[account(mut)]
     pub signer: Signer<'info>
 }
+
+#[derive(Debug, Clone, AnchorSerialize, AnchorDeserialize)]
+pub struct ItemStruct {
+    pub gif_link: String,
+    pub signer_address: Pubkey,
+}
