@@ -17,6 +17,7 @@ pub mod otaku {
     pub fn add_gif(ctx: Context<AddGif>) -> Result<()> {
         let base_account = &mut ctx.accounts.base_account;
         base_account.total_gifs += 1;
+        let signer = &mut ctx.accounts.signer;
         Ok(())
     }
 } 
@@ -42,4 +43,6 @@ pub struct Initialize<'info> {
 pub struct AddGif<'info> {
     #[account(mut)]
     pub base_account: Account<'info, BaseAccount>,
+    #[account(mut)]
+    pub signer: Signer<'info>
 }
