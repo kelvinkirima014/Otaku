@@ -33,15 +33,19 @@ const main = async() => {
   //access total_gifs
   console.log('👀 GIF Count', account.totalGifs.toString());
 
-  await program.rpc.addGif({
+  await program.rpc.addGif("https://media.giphy.com/media/3o7bugwhhJE9WhxkYw/giphy.gif", {
     accounts: {
       baseAccount: baseAccount.publicKey,
+      //pubKey of user submitting gif
+      signer: provider.wallet.publicKey,
     }
   });
 
   account = await program.account.baseAccount.fetch(baseAccount.publicKey);
   console.log('👀 GIF Count', account.totalGifs.toString());
   
+  //access gif_list on the account
+  console.log("👀 GIF List", account.gifList);
   
 };
 

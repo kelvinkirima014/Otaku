@@ -14,10 +14,21 @@ pub mod otaku {
         Ok(())
     }
 
-    pub fn add_gif(ctx: Context<AddGif>) -> Result<()> {
+    pub fn add_gif(ctx: Context<AddGif>, gif_link: String) -> Result<()> {
         let base_account = &mut ctx.accounts.base_account;
         base_account.total_gifs += 1;
         let signer = &mut ctx.accounts.signer;
+
+        //build struct
+        let item = ItemStruct {
+            gif_link: gif_link.to_string(),
+            signer_address: *signer.to_account_info().key,
+        };
+
+        //add struct to `gif_list` vector
+        base_account.gif_list.push(item);
+        base_account.total_gifs += 1;
+
         Ok(())
     }
 } 
@@ -26,6 +37,7 @@ pub mod otaku {
 #[account]
 pub struct BaseAccount {
     pub total_gifs: u64,
+    pub gif_list: Vec<ItemStruct>,
 }
 
 #[derive(Accounts)]
