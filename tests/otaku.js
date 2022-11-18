@@ -10,7 +10,6 @@ const main = async() => {
   const provider = anchor.AnchorProvider.env();
   anchor.setProvider(provider);
 
-  // Add your test here.
   const program = anchor.workspace.Otaku;
 
   //create an account keypair for our program to use
@@ -30,7 +29,7 @@ const main = async() => {
 
   //fetch data from the account
   let account = await program.account.baseAccount.fetch(baseAccount.publicKey);
-  //access total_gifs
+
   console.log('👀 GIF Count', account.totalGifs.toString());
 
   await program.rpc.addGif("https://media.giphy.com/media/3o7bugwhhJE9WhxkYw/giphy.gif", {
@@ -44,7 +43,6 @@ const main = async() => {
   account = await program.account.baseAccount.fetch(baseAccount.publicKey);
   console.log('👀 GIF Count', account.totalGifs.toString());
   
-  //access gif_list on the account
   console.log("👀 GIF List", account.gifList);
   
 };
